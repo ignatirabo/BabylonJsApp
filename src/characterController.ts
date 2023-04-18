@@ -27,11 +27,11 @@ export class Player extends TransformNode {
     private _jumped: boolean = false;
 
     //const values
-    private static readonly PLAYER_SPEED: number = 0.45;
-    private static readonly JUMP_FORCE: number = 0.80;
+    private static readonly PLAYER_SPEED: number = 0.25;
+    private static readonly JUMP_FORCE: number = 0.70;
     private static readonly GRAVITY: number = -2.8;
     private static readonly DASH_FACTOR: number = 2.5;
-    private static readonly DASH_TIME: number = 10; //how many frames the dash lasts
+    private static readonly DASH_TIME: number = 17; //how many frames the dash lasts
     private static readonly DOWN_TILT: Vector3 = new Vector3(0.8290313946973066, 0, 0);
     private static readonly ORIGINAL_TILT: Vector3 = new Vector3(0.5934119456780721, 0, 0);
     public dashTime: number = 0;
@@ -206,7 +206,7 @@ export class Player extends TransformNode {
         let move = correctedHorizontal.addInPlace(correctedVertical);
 
         //clear y so that the character doesnt fly up, normalize for next step, taking into account whether we've DASHED or not
-        this._moveDirection = new Vector3((move).normalize().x * dashFactor, 0, (move).normalize().z * dashFactor);
+        this._moveDirection = new Vector3((move).normalize().x * dashFactor, (move).y, (move).normalize().z * dashFactor);
 
         //clamp the input value so that diagonal movement isn't twice as fast
         let inputMag = Math.abs(this._h) + Math.abs(this._v);
