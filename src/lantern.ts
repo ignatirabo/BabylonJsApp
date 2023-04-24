@@ -1,4 +1,4 @@
-import { Scene, Color3, Mesh, Vector3, PointLight, Texture, Color4, ParticleSystem, AnimationGroup, PBRMetallicRoughnessMaterial } from "@babylonjs/core";
+import { Scene, Color3, Mesh, Vector3, PointLight, Texture, Color4, ParticleSystem, AnimationGroup, PBRMetallicRoughnessMaterial, SpotLight, Tools } from "@babylonjs/core";
 
 export class Lantern {
     public _scene: Scene;
@@ -7,6 +7,7 @@ export class Lantern {
     public isLit: boolean = false;
     private _lightmtl: PBRMetallicRoughnessMaterial;
     private _light: PointLight;
+    private _lightProj: SpotLight;
 
     //Lantern animations
     private _spinAnim: AnimationGroup;
@@ -27,14 +28,21 @@ export class Lantern {
         //set animations
         this._spinAnim = animationGroups;
 
-        //create light source for the lanterns
+        // Point light for lantern
         const light = new PointLight("lantern light", this.mesh.getAbsolutePosition(), this._scene);
         light.intensity = 0;
         light.radius = 2;
         light.diffuse = new Color3(0.45, 0.56, 0.80);
         this._light = light;
+        // Spot light for lantern
+        const lightProj = new SpotLight("lantern proj", this.mesh.getAbsolutePosition().add(new Vector3(0,1,0)),
+        new Vector3(0,-1,0), Tools.ToRadians(45), 1, this._scene);
+        lightProj.projectionTexture = new Texture("textures/lanternProjection.png", this._scene);
+        lightProj.intensity = 0;
+        this._lightProj = lightProj;
+
         //only allow light to affect meshes near it
-        this._findNearestMeshes(light);
+        // this._findNearestMeshes(light);
     }
 
     private _loadLantern(mesh: Mesh, position: Vector3): void {
@@ -52,7 +60,8 @@ export class Lantern {
         this._stars.start();
         //swap texture
         this.mesh.material = this._lightmtl;
-        this._light.intensity = 30;
+        this._light.intensity = 100;
+        this._lightProj.intensity = 100;
     }
 
     //when the light is created, only include the meshes specified
@@ -68,7 +77,7 @@ export class Lantern {
         }
         //grab the corresponding transform node that holds all of the meshes affected by this lantern's light
         this._scene.getTransformNodeByName(this.mesh.name + "lights").getChildMeshes().forEach(m => {
-           light.includedOnlyMeshes.push(m);
+            light.includedOnlyMeshes.push(m);
         })
     }
 

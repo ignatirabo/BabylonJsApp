@@ -75,11 +75,11 @@ class App {
                     this._scene.render();
                     break;
                 case State.GAME:
-                    //if 240seconds/ 4mins have have passed, go to the lose state
-                    if (this._ui.time >= 240 && !this._player.win) {
-                        this._goToLose();
-                        this._ui.stopTimer();
-                    }
+                    // if 240seconds/ 4mins have have passed, go to the lose state
+                    // if (this._ui.time >= 240 && !this._player.win) {
+                    //     this._goToLose();
+                    //     this._ui.stopTimer();
+                    // }
                     if (this._ui.quit) {
                         this._goToStart();
                         this._ui.quit = false;
@@ -101,7 +101,6 @@ class App {
 
     //set up the canvas
     private _createCanvas(): HTMLCanvasElement {
-
         //Commented out for development
         document.documentElement.style["overflow"] = "hidden";
         document.documentElement.style.overflow = "hidden";
@@ -586,7 +585,6 @@ class App {
 
     //loading sounds for the game scene
     private _loadSounds(scene: Scene): void {
-
         this.game = new Sound("gameSong", "./sounds/Christmassynths.wav", scene, function () {
         }, {
             loop:true,
@@ -601,7 +599,6 @@ class App {
 
     //goToGame
     private async _goToGame(): Promise<void> {
-        
         //--SETUP SCENE--
         this._scene.detachControl();
         let scene = this._gamescene;
@@ -647,7 +644,6 @@ class App {
     }
 
     private _showWin(): void {
-
         //stop game sound and play end song
         this.game.dispose();
         this.end.play();
@@ -866,7 +862,6 @@ class App {
 
     //load the character model
     private async _loadCharacterAssets(scene): Promise<any> {
-
         async function loadCharacter() {
             //collision mesh
             const outer = MeshBuilder.CreateBox("outer", { width: 2, depth: 1, height: 3 }, scene);
@@ -908,7 +903,6 @@ class App {
 
     //init game
     private async _initializeGameAsync(scene): Promise<void> {
-
         scene.ambientColor = new Color3(0.34509803921568627, 0.5568627450980392, 0.8352941176470589);
         scene.clearColor = new Color4(0.01568627450980392, 0.01568627450980392, 0.20392156862745098);
 

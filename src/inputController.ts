@@ -28,7 +28,6 @@ export class PlayerInput {
     private _mobileDash: boolean;
 
     constructor(scene: Scene, ui: Hud) {
-
         this._scene = scene;
         this._ui = ui;
 
@@ -67,7 +66,6 @@ export class PlayerInput {
     // Keyboard controls & Mobile controls
     //handles what is done when keys are pressed or if on mobile, when buttons are pressed
     private _updateFromKeyboard(): void {
-
         //forward - backwards movement
         if ((this.inputMap["ArrowUp"] || this.mobileUp) && !this._ui.gamePaused) {
             this.verticalAxis = 1;

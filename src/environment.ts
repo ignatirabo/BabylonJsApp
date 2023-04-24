@@ -20,15 +20,14 @@ export class Environment {
         //create emissive material for when lantern is lit
         const lightmtl = new PBRMetallicRoughnessMaterial("lantern mesh light", this._scene);
         lightmtl.emissiveTexture = new Texture("/textures/litLantern.png", this._scene, true, false);
-        lightmtl.emissiveColor = new Color3(0.8784313725490196, 0.7568627450980392, 0.6235294117647059);
+        lightmtl.emissiveColor = new Color3(0.92, 0.78, 0.58);
         this._lightmtl = lightmtl;
     }
     //What we do once the environment assets have been imported
     //handles setting the necessary flags for collision and trigger meshes,
     //sets up the lantern objects
     //creates the firework particle systems for end-game
-     public async load() {
-       
+    public async load() {
         const assets = await this._loadAsset();
         //Loop through all environment meshes that were imported
         assets.allMeshes.forEach(m => {
@@ -93,7 +92,7 @@ export class Environment {
                 }
             })
         })
-     }
+    }
 
 
     //Load all necessary meshes for the environment
