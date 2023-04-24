@@ -42,7 +42,7 @@ export class Lantern {
         this._lightProj = lightProj;
 
         //only allow light to affect meshes near it
-        // this._findNearestMeshes(light);
+        this._findNearestMeshes(light);
     }
 
     private _loadLantern(mesh: Mesh, position: Vector3): void {
