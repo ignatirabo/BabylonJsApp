@@ -34,15 +34,18 @@ export class Lantern {
         light.radius = 2;
         light.diffuse = new Color3(0.45, 0.56, 0.80);
         this._light = light;
+        light.setEnabled(false);
         // Spot light for lantern
         const lightProj = new SpotLight("lantern proj", this.mesh.getAbsolutePosition().add(new Vector3(0,1,0)),
         new Vector3(0,-1,0), Tools.ToRadians(45), 1, this._scene);
         lightProj.projectionTexture = new Texture("textures/lanternProjection.png", this._scene);
         lightProj.intensity = 0;
         this._lightProj = lightProj;
+        lightProj.setEnabled(false);
 
         //only allow light to affect meshes near it
         this._findNearestMeshes(light);
+        this._findNearestMeshes(lightProj);
     }
 
     private _loadLantern(mesh: Mesh, position: Vector3): void {
@@ -60,12 +63,14 @@ export class Lantern {
         this._stars.start();
         //swap texture
         this.mesh.material = this._lightmtl;
+        this._light.setEnabled(true);
         this._light.intensity = 100;
+        this._lightProj.setEnabled(true);
         this._lightProj.intensity = 100;
     }
 
     //when the light is created, only include the meshes specified
-    private _findNearestMeshes(light: PointLight): void {
+    private _findNearestMeshes(light): void {
         if(this.mesh.name.includes("14") || this.mesh.name.includes("15")) {
             light.includedOnlyMeshes.push(this._scene.getMeshByName("festivalPlatform1"));
         } else if(this.mesh.name.includes("16") || this.mesh.name.includes("17")) {

@@ -66,11 +66,16 @@ export class PlayerInput {
     // Keyboard controls & Mobile controls
     //handles what is done when keys are pressed or if on mobile, when buttons are pressed
     private _updateFromKeyboard(): void {
+        if (this.inputMap["`"]) {
+            this._scene.debugLayer.show()
+            // if (this._scene.debugLayer.isVisible()) { this._scene.debugLayer.hide(); }
+            // else { this._scene.debugLayer.show(); }
+        }
+
         //forward - backwards movement
         if ((this.inputMap["ArrowUp"] || this.mobileUp) && !this._ui.gamePaused) {
             this.verticalAxis = 1;
             this.vertical = Scalar.Lerp(this.vertical, 1, 0.2);
-
         } else if ((this.inputMap["ArrowDown"] || this.mobileDown) && !this._ui.gamePaused) {
             this.vertical = Scalar.Lerp(this.vertical, -1, 0.2);
             this.verticalAxis = -1;
